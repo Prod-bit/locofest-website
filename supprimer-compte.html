@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Suppression de compte - LocoFest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase App (core) SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 420px; margin: 40px auto; padding: 20px; background: #fffbe6; color: #222; }
+    h1 { color: #b8860b; }
+    input, button { font-size: 1em; margin: 8px 0; width: 100%; padding: 8px; }
+    button { background: #b8860b; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .error { color: #c00; margin-top: 8px; }
+    .success { color: #080; margin-top: 8px; }
+    .link { color: #1976d2; text-decoration: underline; cursor: pointer; font-size: 0.95em; }
+    #deleteSection { margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <h1>Suppression de compte</h1>
+  <p>Pour supprimer votre compte LocoFest et toutes vos données associées, veuillez vous authentifier :</p>
+  <form id="deleteForm">
+    <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email">
+    <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password">
+    <button type="submit">Se connecter</button>
+    <div class="link" id="forgotPwd">Mot de passe oublié ?</div>
+    <div id="message"></div>
+  </form>
+  <div id="deleteSection" style="display:none;">
+    <p>Vous êtes authentifié.<br>
+      <b>Attention :</b> Cette action est irréversible.<br>
+      Cliquez ci-dessous pour supprimer définitivement votre compte et toutes vos données associées.
+    </p>
+    <button id="deleteBtn">Supprimer mon compte</button>
+    <div id="deleteMessage"></div>
+  </div>
+  <script>
+    // === CONFIGURATION FIREBASE ===
+    const firebaseConfig = {
+      apiKey: "AIzaSyCPejul5mww9qpJvqOAVvPU96cve7eQetw",
+      authDomain: "locofest-c8d83.firebaseapp.com",
+      projectId: "locofest-c8d83",
+      storageBucket: "locofest-c8d83.appspot.com",
+      messagingSenderId: "47586903688",
+      appId: "1:47586903688:web:32cddf85cee3c99a16413d",
+      measurementId: "G-SMQ8VMMP9F"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // === MOT DE PASSE OUBLIÉ ===
+    document.getElementById('forgotPwd').onclick = function() {
+      const email = document.getElementById('email').value.trim();
+      if (!email) {
+        document.getElementById('message').innerHTML = "<span class='error'>Veuillez entrer votre adresse e-mail pour réinitialiser le mot de passe.</span>";
+        return;
+      }
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          document.getElementById('message').innerHTML = "<span class='success'>Un e-mail de réinitialisation a été envoyé.</span>";
+        })
+        .catch(error => {
+          document.getElementById('message').innerHTML = "<span class='error'>" + error.message + "</span>";
+        });
+    };
+
+    // === AUTHENTIFICATION ===
+    document.getElementById('deleteForm').onsubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('message').innerHTML = "";
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById('deleteForm').style.display = 'none';
+          document.getElementById('deleteSection').style.display = 'block';
+        })
+        .catch(error => {
+          document.getElementById('message').innerHTML = "<span class='error'>" + error.message + "</span>";
+        });
+    };
+
+    // === SUPPRESSION DU COMPTE ===
+    document.getElementById('deleteBtn').onclick = function() {
+      document.getElementById('deleteMessage').innerHTML = "";
+      const user = auth.currentUser;
+      if (!user) {
+        document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur : utilisateur non authentifié.</span>";
+        return;
+      }
+      // Ici tu peux aussi appeler ton backend pour supprimer les données Firestore associées
+      user.delete()
+        .then(() => {
+          document.getElementById('deleteMessage').innerHTML = "<span class='success'>Votre compte a bien été supprimé.</span>";
+        })
+        .catch(error => {
+          // Si besoin, re-authentifier l'utilisateur (Firebase peut exiger une reconnexion récente)
+          if (error.code === 'auth/requires-recent-login') {
+            document.getElementById('deleteMessage').innerHTML = "<span class='error'>Veuillez vous reconnecter pour confirmer la suppression.</span>";
+            document.getElementById('deleteForm').style.display = 'block';
+            document.getElementById('deleteSection').style.display = 'none';
+            auth.signOut();
+          } else {
+            document.getElementById('deleteMessage').innerHTML = "<span class='error'>" + error.message + "</span>";
+          }
+        });
+    };
+  </script>
+</body>
+</html>
