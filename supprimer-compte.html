@@ -183,7 +183,7 @@
         });
     };
 
-    // === SUPPRESSION DU COMPTE ===
+    // === SUPPRESSION DU COMPTE (corrigé : backend d'abord, puis Firebase) ===
     document.getElementById('deleteBtn').onclick = function() {
       document.getElementById('deleteMessage').innerHTML = "";
       const user = auth.currentUser;
@@ -192,37 +192,39 @@
         return;
       }
       user.getIdToken().then(token => {
-        user.delete()
-          .then(() => {
-            fetch('https://locofest-backend.onrender.com/deleteUserData', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-              }
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
+        // 1. Supprimer les données backend d'abord
+        fetch('https://locofest-backend.onrender.com/deleteUserData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // 2. Ensuite supprimer l'utilisateur Firebase
+            user.delete()
+              .then(() => {
                 document.getElementById('deleteMessage').innerHTML = "<span class='success'>Votre compte et vos données ont bien été supprimés.</span>";
-              } else {
-                document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données : " + (data.error || 'inconnue') + "</span>";
-              }
-            })
-            .catch(() => {
-              document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données associées.</span>";
-            });
-          })
-          .catch(error => {
-            if (error.code === 'auth/requires-recent-login') {
-              document.getElementById('deleteMessage').innerHTML = "<span class='error'>Veuillez vous reconnecter pour confirmer la suppression.</span>";
-              document.getElementById('deleteForm').style.display = 'block';
-              document.getElementById('deleteSection').style.display = 'none';
-              auth.signOut();
-            } else {
-              document.getElementById('deleteMessage').innerHTML = "<span class='error'>" + error.message + "</span>";
-            }
-          });
+              })
+              .catch(error => {
+                if (error.code === 'auth/requires-recent-login') {
+                  document.getElementById('deleteMessage').innerHTML = "<span class='error'>Veuillez vous reconnecter pour confirmer la suppression.</span>";
+                  document.getElementById('deleteForm').style.display = 'block';
+                  document.getElementById('deleteSection').style.display = 'none';
+                  auth.signOut();
+                } else {
+                  document.getElementById('deleteMessage').innerHTML = "<span class='error'>" + error.message + "</span>";
+                }
+              });
+          } else {
+            document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données : " + (data.error || 'inconnue') + "</span>";
+          }
+        })
+        .catch(() => {
+          document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données associées.</span>";
+        });
       });
     };
   </script>
