@@ -4,83 +4,231 @@
   <meta charset="UTF-8">
   <title>Politique de confidentialité - LocoFest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #fffbe6; color: #222; }
-    h1 { color: #b8860b; }
-    h2 { color: #b8860b; }
-    ul { margin-bottom: 18px; }
+    :root {
+      --main-bg: #fffbe6;
+      --main-color: #222;
+      --accent: #b8860b;
+      --accent2: #ffe082;
+      --card-bg: #fffdfa;
+      --shadow: 0 4px 24px 0 rgba(184,134,11,0.08);
+      --border: #ffe082;
+      --link: #1976d2;
+      --mail-btn: #ffe082;
+      --mail-btn-hover: #b8860b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --main-bg: #181818;
+        --main-color: #f5f5f5;
+        --accent: #ffd700;
+        --accent2: #2a2a2a;
+        --card-bg: #232323;
+        --shadow: 0 4px 24px 0 rgba(255,215,0,0.08);
+        --border: #ffd700;
+        --link: #90caf9;
+        --mail-btn: #232323;
+        --mail-btn-hover: #ffd700;
+      }
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--main-bg);
+      color: var(--main-color);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 750px;
+      margin: 40px auto 32px auto;
+      padding: 28px 18px 32px 18px;
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
+    }
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    h2 {
+      color: var(--accent);
+      font-size: 1.25rem;
+      margin-top: 2.2em;
+      margin-bottom: 0.7em;
+      letter-spacing: 0.2px;
+    }
+    ul, ol {
+      margin-bottom: 18px;
+      margin-top: 0.5em;
+      padding-left: 1.2em;
+    }
+    li {
+      margin-bottom: 0.4em;
+      line-height: 1.6;
+    }
+    p {
+      margin-bottom: 1.1em;
+      line-height: 1.7;
+    }
+    .mail-btn {
+      display: inline-block;
+      background: var(--mail-btn);
+      color: var(--accent);
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 7px 18px 7px 14px;
+      text-decoration: none;
+      border: 1.5px solid var(--accent);
+      transition: background 0.2s, color 0.2s;
+      margin-left: 6px;
+      margin-top: 4px;
+      font-size: 1em;
+      box-shadow: 0 2px 8px 0 rgba(184,134,11,0.06);
+      vertical-align: middle;
+    }
+    .mail-btn:hover, .mail-btn:focus {
+      background: var(--mail-btn-hover);
+      color: #fff;
+      border-color: var(--mail-btn-hover);
+    }
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    a:hover, a:focus {
+      color: var(--accent);
+    }
+    .section-card {
+      background: var(--accent2);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 1.5em;
+      box-shadow: 0 2px 8px 0 rgba(184,134,11,0.04);
+      border-left: 4px solid var(--accent);
+    }
+    .update-date {
+      text-align: right;
+      font-size: 0.98em;
+      color: var(--accent);
+      margin-bottom: 1.5em;
+      margin-top: -1.5em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 10px 2vw 20px 2vw; }
+      h1 { font-size: 1.3rem; }
+      h2 { font-size: 1.05rem; }
+      .section-card { padding: 10px 8px; }
+    }
   </style>
 </head>
 <body>
-  <h1>Politique de confidentialité</h1>
-  <p>Dernière mise à jour : août 2025</p>
+  <div class="container">
+    <h1>Politique de confidentialité</h1>
+    <div class="update-date">Dernière mise à jour : août 2025</div>
 
-  <h2>1. Responsable du traitement</h2>
-  <p>LocoFest, contact : <a href="mailto:contact@locofest.net">contact@locofest.net</a></p>
+    <div class="section-card">
+      <h2>1. Responsable du traitement</h2>
+      <p>
+        LocoFest<br>
+        Contact : 
+        <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
+        <a class="mail-btn" href="mailto:locofestfr@gmail.com" title="Envoyer un mail">✉️&nbsp;Nous écrire</a>
+      </p>
+    </div>
 
-  <h2>2. Données collectées</h2>
-  <ul>
-    <li>Identité : pseudo, email, date de naissance</li>
-    <li>Données de compte : mot de passe (chiffré), photo de profil</li>
-    <li>Données d’événements : événements créés, photos, descriptions</li>
-    <li>Données de localisation : ville, position approximative</li>
-    <li>Données d’utilisation : statistiques, participations, favoris, likes</li>
-    <li>Messages et contenus échangés</li>
-    <li>Données techniques : adresse IP, identifiants d’appareil</li>
-    <li>Données de paiement (via Stripe, jamais stockées par LocoFest)</li>
-  </ul>
+    <h2>2. Données collectées</h2>
+    <ul>
+      <li>Identité : pseudo, email, date de naissance</li>
+      <li>Données de compte : mot de passe (chiffré), photo de profil</li>
+      <li>Données d’événements : événements créés, photos, descriptions</li>
+      <li>Données de localisation : ville, position approximative</li>
+      <li>Données d’utilisation : statistiques, participations, favoris, likes</li>
+      <li>Messages et contenus échangés</li>
+      <li>Données techniques : adresse IP, identifiants d’appareil</li>
+      <li>Données de paiement (via Stripe, jamais stockées par LocoFest)</li>
+    </ul>
 
-  <h2>3. Finalités et bases légales</h2>
-  <ul>
-    <li>Création et gestion du compte utilisateur (contrat)</li>
-    <li>Personnalisation de l’expérience (intérêt légitime)</li>
-    <li>Gestion des abonnements et paiements (contrat)</li>
-    <li>Statistiques et amélioration du service (intérêt légitime)</li>
-    <li>Sécurité, prévention de la fraude (intérêt légitime)</li>
-    <li>Envoi de notifications et emails (consentement ou intérêt légitime)</li>
-  </ul>
+    <h2>3. Finalités et bases légales</h2>
+    <ul>
+      <li>Création et gestion du compte utilisateur (contrat)</li>
+      <li>Personnalisation de l’expérience (intérêt légitime)</li>
+      <li>Gestion des abonnements et paiements (contrat)</li>
+      <li>Statistiques et amélioration du service (intérêt légitime)</li>
+      <li>Sécurité, prévention de la fraude (intérêt légitime)</li>
+      <li>Envoi de notifications et emails (consentement ou intérêt légitime)</li>
+    </ul>
 
-  <h2>4. Partage et sous-traitants</h2>
-  <p>Vos données peuvent être partagées avec :</p>
-  <ul>
-    <li>Firebase (hébergement, authentification, analytics) – <a href="https://firebase.google.com/support/privacy" target="_blank">Politique</a></li>
-    <li>Stripe (paiement) – <a href="https://stripe.com/fr/privacy" target="_blank">Politique</a></li>
-    <li>Hébergeur du site et de l’app</li>
-    <li>Outils d’analyse d’audience (Google Analytics, etc.)</li>
-  </ul>
-  <p>Nous ne revendons jamais vos données à des tiers.</p>
+    <h2>4. Partage et sous-traitants</h2>
+    <p>Vos données peuvent être partagées avec :</p>
+    <ul>
+      <li>Firebase (hébergement, authentification, analytics) – <a href="https://firebase.google.com/support/privacy" target="_blank">Politique</a></li>
+      <li>Stripe (paiement) – <a href="https://stripe.com/fr/privacy" target="_blank">Politique</a></li>
+      <li>Hébergeur du site et de l’app</li>
+      <li>Outils d’analyse d’audience (Google Analytics, etc.)</li>
+    </ul>
+    <p>Nous ne revendons jamais vos données à des tiers.</p>
 
-  <h2>5. Durée de conservation</h2>
-  <ul>
-    <li>Données de compte : tant que le compte est actif</li>
-    <li>Données d’événements et messages : jusqu’à suppression du compte ou selon la loi</li>
-    <li>Données techniques et statistiques : 13 mois maximum</li>
-    <li>Données de paiement : selon la réglementation Stripe</li>
-  </ul>
+    <h2>5. Durée de conservation</h2>
+    <ul>
+      <li>Données de compte : tant que le compte est actif</li>
+      <li>Données d’événements et messages : jusqu’à suppression du compte ou selon la loi</li>
+      <li>Données techniques et statistiques : 13 mois maximum</li>
+      <li>Données de paiement : selon la réglementation Stripe</li>
+    </ul>
 
-  <h2>6. Transferts hors UE</h2>
-  <p>Certains partenaires (Firebase, Stripe) peuvent traiter des données hors de l’Union Européenne. Ces transferts sont encadrés par des clauses contractuelles types et des garanties appropriées.</p>
+    <h2>6. Transferts hors UE</h2>
+    <p>
+      Certains partenaires (Firebase, Stripe) peuvent traiter des données hors de l’Union Européenne.
+      Ces transferts sont encadrés par des clauses contractuelles types et des garanties appropriées.
+    </p>
 
-  <h2>7. Droits des utilisateurs</h2>
-  <ul>
-    <li>Droit d’accès, de rectification, d’effacement</li>
-    <li>Droit d’opposition et de limitation</li>
-    <li>Droit à la portabilité</li>
-    <li>Droit de retirer votre consentement à tout moment</li>
-    <li>Pour exercer vos droits, contactez : <a href="mailto:contact@locofest.net">contact@locofest.net</a></li>
-    <li>Vous pouvez aussi introduire une réclamation auprès de la CNIL</li>
-  </ul>
+    <h2>7. Droits des utilisateurs</h2>
+    <ul>
+      <li>Droit d’accès, de rectification, d’effacement</li>
+      <li>Droit d’opposition et de limitation</li>
+      <li>Droit à la portabilité</li>
+      <li>Droit de retirer votre consentement à tout moment</li>
+      <li>
+        Pour exercer vos droits, contactez : 
+        <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
+        <a class="mail-btn" href="mailto:locofestfr@gmail.com" title="Envoyer un mail">✉️&nbsp;Nous écrire</a>
+      </li>
+      <li>Vous pouvez aussi introduire une réclamation auprès de la CNIL</li>
+    </ul>
 
-  <h2>8. Sécurité</h2>
-  <p>Nous mettons en œuvre des mesures techniques et organisationnelles pour protéger vos données (chiffrement, accès restreint, sauvegardes). Aucun système n’est infaillible.</p>
+    <h2>8. Sécurité</h2>
+    <p>
+      Nous mettons en œuvre des mesures techniques et organisationnelles pour protéger vos données (chiffrement, accès restreint, sauvegardes).
+      Aucun système n’est infaillible.
+    </p>
 
-<h2>9. Cookies et traceurs</h2>
-<p>LocoFest n’utilise pas de cookies à des fins de suivi ou de publicité. Certains cookies techniques peuvent être déposés par nos partenaires (Firebase, Stripe) pour assurer le bon fonctionnement de l’application.</p>
+    <h2>9. Cookies et traceurs</h2>
+    <p>
+      LocoFest n’utilise pas de cookies à des fins de suivi ou de publicité.
+      Certains cookies techniques peuvent être déposés par nos partenaires (Firebase, Stripe) pour assurer le bon fonctionnement de l’application.
+    </p>
 
-  <h2>10. Modification de la politique</h2>
-  <p>Cette politique peut évoluer. Toute modification sera affichée sur cette page. En cas de changement majeur, vous serez notifié dans l’application.</p>
+    <h2>10. Modification de la politique</h2>
+    <p>
+      Cette politique peut évoluer. Toute modification sera affichée sur cette page.
+      En cas de changement majeur, vous serez notifié dans l’application.
+    </p>
 
-  <h2>11. Contact</h2>
-  <p>Pour toute question ou demande concernant vos données personnelles, contactez-nous à <a href="mailto:contact@locofest.net">contact@locofest.net</a>.</p>
+    <div class="section-card">
+      <h2>11. Contact</h2>
+      <p>
+        Pour toute question ou demande concernant vos données personnelles, contactez-nous à
+        <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
+        <a class="mail-btn" href="mailto:locofestfr@gmail.com" title="Envoyer un mail">✉️&nbsp;Nous écrire</a>
+      </p>
+    </div>
+  </div>
 </body>
 </html>
