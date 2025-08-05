@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>LocoFest - Accueil</title>
+  <title>Locofest - Accueil</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -17,10 +17,10 @@
       justify-content: center;
     }
     .container {
-      background: rgba(255,255,255,0.93);
+      background: rgba(255,255,255,0.97);
       box-shadow: 0 4px 32px rgba(52,170,220,0.08), 0 1.5px 14px rgba(34,51,120,0.08);
       border-radius: 22px;
-      max-width: 360px;
+      max-width: 370px;
       width: 92vw;
       padding: 40px 28px 32px 28px;
       text-align: center;
@@ -30,26 +30,33 @@
       0% { opacity: 0; transform: translateY(-25px);}
       100% { opacity: 1; transform: translateY(0);}
     }
-    .logo {
-      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
-      font-weight: 700;
-      color: #1e2a78;
-      font-size: 2.4em;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-      line-height: 1.1;
+    .logo-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 13px;
+      margin-bottom: 10px;
     }
-    .logo span {
-      color: #34aadc;
+    .logo-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: #fff;
+      object-fit: contain;
+      box-shadow: 0 2px 8px rgba(52,170,220,0.10);
+    }
+    .logo-text {
+      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+      font-weight: 700;
+      color: #1e2a78;
+      font-size: 2.1em;
+      letter-spacing: 1.5px;
+      line-height: 1.1;
     }
     h1 {
       font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
       color: #1e2a78;
-      font-size: 1.3em;
+      font-size: 1.18em;
       font-weight: 700;
       margin-top: 10px;
       margin-bottom: 8px;
@@ -107,24 +114,21 @@
         padding: 20px 6vw 16px 6vw;
         max-width: 99vw;
       }
-      .logo { font-size: 1.6em;}
+      .logo-text { font-size: 1.3em;}
+      .logo-img { width: 28px; height: 28px;}
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">
-      <svg width="30" height="30" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:-7px;">
-        <circle cx="51" cy="51" r="48" stroke="#34aadc" stroke-width="7" fill="white"/>
-        <circle cx="51" cy="44" r="15" fill="#1e2a78" />
-        <ellipse cx="51" cy="74" rx="19" ry="11" fill="#34aadc"/>
-      </svg>
-      Loco<span>Fest</span>
+    <div class="logo-row">
+      <img src="logo-locofest.png" alt="Logo Locofest" class="logo-img" />
+      <span class="logo-text">Locofest</span>
     </div>
-    <h1>Bienvenue sur LocoFest !</h1>
+    <h1>Bienvenue sur Locofest&nbsp;!</h1>
     <p>
-      Votre plateforme d’événements et de rencontres ludiques.<br>
-      <span style="font-size:1.14em;">🚀</span> Votre site est en ligne !
+      La plateforme pour découvrir, organiser et partager des événements ludiques, jeux, soirées et rencontres près de chez toi.<br>
+      Rejoins la communauté Locofest et ne rate plus aucun événement !
     </p>
     <ul class="quick-links">
       <li>
@@ -139,7 +143,7 @@
       </li>
     </ul>
     <div class="footer">
-      © 2025 LocoFest · Contact : <a href="mailto:locofestfr@gmail.com" style="color:#34aadc;text-decoration:underline;">locofestfr@gmail.com</a>
+      © 2025 Locofest · Contact : <a href="mailto:locofestfr@gmail.com" style="color:#34aadc;text-decoration:underline;">locofestfr@gmail.com</a>
     </div>
   </div>
 </body>
