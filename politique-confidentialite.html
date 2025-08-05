@@ -4,61 +4,38 @@
   <meta charset="UTF-8">
   <title>Politique de confidentialité - LocoFest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --main-bg: #fffbe6;
-      --main-color: #222;
-      --accent: #b8860b;
-      --accent2: #ffe082;
-      --card-bg: #fffdfa;
-      --shadow: 0 4px 24px 0 rgba(184,134,11,0.08);
-      --border: #ffe082;
-      --link: #1976d2;
-      --mail-btn: #ffe082;
-      --mail-btn-hover: #b8860b;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --main-bg: #181818;
-        --main-color: #f5f5f5;
-        --accent: #ffd700;
-        --accent2: #2a2a2a;
-        --card-bg: #232323;
-        --shadow: 0 4px 24px 0 rgba(255,215,0,0.08);
-        --border: #ffd700;
-        --link: #90caf9;
-        --mail-btn: #232323;
-        --mail-btn-hover: #ffd700;
-      }
-    }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--main-bg);
-      color: var(--main-color);
+      font-family: 'Roboto', Arial, sans-serif;
+      background: linear-gradient(120deg, #1e2a78 0%, #34aadc 100%);
+      color: #222b44;
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .container {
       max-width: 750px;
       margin: 40px auto 32px auto;
-      padding: 28px 18px 32px 18px;
-      background: var(--card-bg);
+      padding: 38px 28px 32px 28px;
+      background: rgba(255,255,255,0.97);
       border-radius: 18px;
-      box-shadow: var(--shadow);
-      border: 1.5px solid var(--border);
+      box-shadow: 0 4px 32px rgba(52,170,220,0.08), 0 1.5px 14px rgba(34,51,120,0.08);
     }
     h1 {
-      color: var(--accent);
+      color: #1e2a78;
       font-size: 2.2rem;
       margin-bottom: 0.5em;
       letter-spacing: 0.5px;
       text-align: center;
+      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
     }
     h2 {
-      color: var(--accent);
-      font-size: 1.25rem;
+      color: #34aadc;
+      font-size: 1.18em;
       margin-top: 2.2em;
       margin-bottom: 0.7em;
       letter-spacing: 0.2px;
@@ -76,52 +53,30 @@
       margin-bottom: 1.1em;
       line-height: 1.7;
     }
-    .mail-btn {
-      display: inline-block;
-      background: var(--mail-btn);
-      color: var(--accent);
-      font-weight: bold;
-      border-radius: 8px;
-      padding: 7px 18px 7px 14px;
-      text-decoration: none;
-      border: 1.5px solid var(--accent);
-      transition: background 0.2s, color 0.2s;
-      margin-left: 6px;
-      margin-top: 4px;
-      font-size: 1em;
-      box-shadow: 0 2px 8px 0 rgba(184,134,11,0.06);
-      vertical-align: middle;
-    }
-    .mail-btn:hover, .mail-btn:focus {
-      background: var(--mail-btn-hover);
-      color: #fff;
-      border-color: var(--mail-btn-hover);
-    }
     a {
-      color: var(--link);
+      color: #34aadc;
       text-decoration: underline;
       transition: color 0.2s;
     }
     a:hover, a:focus {
-      color: var(--accent);
+      color: #1e2a78;
     }
     .section-card {
-      background: var(--accent2);
+      background: #f2f8fd;
       border-radius: 12px;
       padding: 16px 18px;
       margin-bottom: 1.5em;
-      box-shadow: 0 2px 8px 0 rgba(184,134,11,0.04);
-      border-left: 4px solid var(--accent);
+      border-left: 4px solid #34aadc;
     }
     .update-date {
       text-align: right;
       font-size: 0.98em;
-      color: var(--accent);
+      color: #34aadc;
       margin-bottom: 1.5em;
       margin-top: -1.5em;
     }
-    @media (max-width: 600px) {
-      .container { padding: 10px 2vw 20px 2vw; }
+    @media (max-width: 700px) {
+      .container { padding: 18px 2vw 20px 2vw; }
       h1 { font-size: 1.3rem; }
       h2 { font-size: 1.05rem; }
       .section-card { padding: 10px 8px; }
@@ -137,9 +92,7 @@
       <h2>1. Responsable du traitement</h2>
       <p>
         LocoFest<br>
-        Contact : 
-        <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
-        <a class="mail-btn" href="mailto:locofestfr@gmail.com" title="Envoyer un mail">✉️&nbsp;Nous écrire</a>
+        Contact : <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
       </p>
     </div>
 
@@ -196,9 +149,7 @@
       <li>Droit à la portabilité</li>
       <li>Droit de retirer votre consentement à tout moment</li>
       <li>
-        Pour exercer vos droits, contactez : 
-        <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
-        <a class="mail-btn" href="mailto:locofestfr@gmail.com" title="Envoyer un mail">✉️&nbsp;Nous écrire</a>
+        Pour exercer vos droits, contactez : <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
       </li>
       <li>Vous pouvez aussi introduire une réclamation auprès de la CNIL</li>
     </ul>
@@ -226,7 +177,6 @@
       <p>
         Pour toute question ou demande concernant vos données personnelles, contactez-nous à
         <a href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
-        <a class="mail-btn" href="mailto:locofestfr@gmail.com" title="Envoyer un mail">✉️&nbsp;Nous écrire</a>
       </p>
     </div>
   </div>
