@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(120deg, #fffbe6 0%, #f7d774 100%);
+      background: linear-gradient(120deg, #1e2a78 0%, #34aadc 100%);
       min-height: 100vh;
       font-family: 'Roboto', Arial, sans-serif;
       margin: 0; padding: 0;
@@ -25,7 +25,7 @@
       margin: 40px 0;
     }
     h1 {
-      color: #b8860b;
+      color: #1e2a78;
       text-align: center;
       font-size: 1.5em;
       margin-bottom: 10px;
@@ -34,7 +34,7 @@
     p {
       text-align: center;
       margin-top: 0;
-      color: #444;
+      color: #222b44;
       font-size: 1.06em;
     }
     input, button {
@@ -49,17 +49,17 @@
       transition: border-color 0.2s;
     }
     input:focus {
-      border-color: #b8860b;
+      border-color: #34aadc;
     }
     button {
-      background: linear-gradient(90deg, #b8860b 60%, #ffd700 100%);
+      background: linear-gradient(90deg, #1e2a78 60%, #34aadc 100%);
       color: #fff;
       border: none;
       font-weight: 600;
       margin-top: 18px;
       cursor: pointer;
       transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: 0 1px 4px rgba(184,134,11,0.09);
+      box-shadow: 0 1px 4px rgba(30,42,120,0.09);
     }
     button:disabled {
       opacity: 0.6;
@@ -183,7 +183,7 @@
         });
     };
 
-    // === SUPPRESSION DU COMPTE (corrigé : backend d'abord, puis Firebase) ===
+    // === SUPPRESSION DU COMPTE (backend d'abord, puis Firebase) ===
     document.getElementById('deleteBtn').onclick = function() {
       document.getElementById('deleteMessage').innerHTML = "";
       const user = auth.currentUser;
