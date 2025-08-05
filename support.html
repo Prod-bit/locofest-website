@@ -30,24 +30,18 @@
       border: 2px solid var(--bleu-principal);
     }
     .logo {
-      width: 60px;
-      height: 60px;
+      width: 100%;
       margin-bottom: 18px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--bleu-principal) 60%, var(--bleu-secondaire) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px #1976d230;
-      margin-left: auto;
-      margin-right: auto;
     }
-    .logo span {
-      color: var(--blanc);
-      font-size: 2.2em;
+    .logo-text {
+      color: var(--bleu-principal);
+      font-size: 2.1em;
       font-weight: bold;
       font-family: 'Roboto', Arial, sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
     h1 {
       color: var(--bleu-principal);
@@ -87,9 +81,8 @@
         margin: 24px 6px 0 6px;
         padding: 22px 8px 18px 8px;
       }
-      .logo {
-        width: 46px;
-        height: 46px;
+      .logo-text {
+        font-size: 1.3em;
       }
       h1 {
         font-size: 1.3em;
@@ -100,7 +93,7 @@
 <body>
   <div class="container">
     <div class="logo">
-      <span>L</span>
+      <span class="logo-text">Locofest</span>
     </div>
     <h1>Support LocoFest</h1>
     <p>Une question, un problème ou besoin d’aide ?<br>
