@@ -20,23 +20,42 @@
     .container {
       max-width: 750px;
       margin: 40px auto 32px auto;
-      padding: 38px 28px 32px 28px;
+      padding: 32px 18px 28px 18px;
       background: rgba(255,255,255,0.97);
       border-radius: 18px;
       box-shadow: 0 4px 32px rgba(52,170,220,0.08), 0 1.5px 14px rgba(34,51,120,0.08);
     }
+    .header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
     h1 {
       color: #1e2a78;
-      font-size: 2.2rem;
-      margin-bottom: 0.5em;
+      font-size: 2.1rem;
+      margin-bottom: 0.2em;
       letter-spacing: 0.5px;
-      text-align: center;
       font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+    }
+    .update-date {
+      font-size: 1em;
+      color: #34aadc;
+      margin-bottom: 0.5em;
+      margin-top: 0;
+      text-align: center;
+      font-weight: 400;
+    }
+    .section-card {
+      background: #f2f8fd;
+      border-radius: 10px;
+      padding: 14px 14px;
+      margin-bottom: 1.5em;
+      border-left: 3px solid #34aadc;
+      box-shadow: none;
     }
     h2 {
       color: #34aadc;
-      font-size: 1.18em;
-      margin-top: 2.2em;
+      font-size: 1.13em;
+      margin-top: 2em;
       margin-bottom: 0.7em;
       letter-spacing: 0.2px;
     }
@@ -61,32 +80,20 @@
     a:hover, a:focus {
       color: #1e2a78;
     }
-    .section-card {
-      background: #f2f8fd;
-      border-radius: 12px;
-      padding: 16px 18px;
-      margin-bottom: 1.5em;
-      border-left: 4px solid #34aadc;
-    }
-    .update-date {
-      text-align: right;
-      font-size: 0.98em;
-      color: #34aadc;
-      margin-bottom: 1.5em;
-      margin-top: -1.5em;
-    }
     @media (max-width: 700px) {
-      .container { padding: 18px 2vw 20px 2vw; }
-      h1 { font-size: 1.3rem; }
-      h2 { font-size: 1.05rem; }
-      .section-card { padding: 10px 8px; }
+      .container { padding: 10px 2vw 16px 2vw; }
+      h1 { font-size: 1.2rem; }
+      h2 { font-size: 1.01rem; }
+      .section-card { padding: 8px 6px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Politique de confidentialité</h1>
-    <div class="update-date">Dernière mise à jour : août 2025</div>
+    <div class="header">
+      <h1>Politique de confidentialité</h1>
+      <div class="update-date">Dernière mise à jour : août 2025</div>
+    </div>
 
     <div class="section-card">
       <h2>1. Responsable du traitement</h2>
