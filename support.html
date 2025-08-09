@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Support LocoFest</title>
+  <title>Support Locofest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Besoin d’aide avec LocoFest ? Contactez le support : réponse sous 24 h." />
+  <meta name="description" content="Besoin d’aide avec Locofest ? Contactez le support : réponse sous 24 h." />
   <meta name="theme-color" content="#1976D2" />
   <style>
     :root{
@@ -151,6 +151,19 @@
       color:#8992a1; font-size:13px;
     }
     a:focus-visible{outline:none; box-shadow:var(--focus); border-radius:8px}
+
+    /* Toast */
+    .toast{
+      position:fixed; left:50%; bottom:18px;
+      transform:translateX(-50%) translateY(18px);
+      opacity:0; transition:all .25s ease;
+      background:#111; color:#fff; padding:10px 14px; border-radius:999px;
+      font-size:14px; box-shadow:0 6px 20px rgba(0,0,0,.3); pointer-events:none;
+    }
+    @media (prefers-color-scheme: dark){
+      .toast{background:#e7eaf0; color:#0b0c0f;}
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
   </style>
 </head>
 <body>
@@ -166,23 +179,22 @@
 
   <div class="wrap">
     <main class="card" role="main">
-      <div class="badge" aria-hidden="true">LocoFest</div>
-      <h1>Support LocoFest</h1>
+      <div class="badge" aria-hidden="true">Locofest</div>
+      <h1>Support Locofest</h1>
       <p>Une question, un problème ou besoin d’aide&nbsp;?<br>Notre équipe vous répond rapidement (sous 24&nbsp;h ouvrées).</p>
 
       <section class="panel" aria-label="Contact">
         <p class="email">
-          <a href="mailto:locofestfr@gmail.com?subject=Support%20LocoFest&body=Bonjour%20LocoFest,%0A%0AJe%20rencontre%20le%20probl%C3%A8me%20suivant%20:%20%0A(Pseudo/Email%20LocoFest%20:%20)%0A%0AAppareil%20:%20iPhone/Android,%20Version%20:%20%0A">
-            locofestfr@gmail.com
-          </a>
+          <!-- Lien simple en fallback -->
+          <a id="emailLink" href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
         </p>
         <div class="actions" aria-label="Actions">
-          <a class="btn" href="mailto:locofestfr@gmail.com?subject=Support%20LocoFest&body=Bonjour%20LocoFest,%0A%0AJe%20rencontre%20le%20probl%C3%A8me%20suivant%20:%20%0A(Pseudo/Email%20LocoFest%20:%20)%0A%0AAppareil%20:%20iPhone/Android,%20Version%20:%20%0A">
-            Envoyer un email
-          </a>
-          <button class="btn btn-secondary" type="button" onclick="navigator.clipboard?.writeText('locofestfr@gmail.com')">Copier l’adresse</button>
+          <button id="sendBtn" class="btn" type="button">Envoyer un email</button>
+          <button id="copyBtn" class="btn btn-secondary" type="button">Copier l’adresse</button>
         </div>
-        <p style="margin-top:10px;color:#667085">Astuce&nbsp;: indiquez votre pseudo ou email LocoFest pour un traitement plus rapide.</p>
+        <p style="margin-top:10px;color:#667085">
+          Astuce&nbsp;: indiquez votre pseudo ou email Locofest pour un traitement plus rapide.
+        </p>
       </section>
 
       <nav class="links" aria-label="Liens utiles">
@@ -191,8 +203,64 @@
         <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use (Apple EULA)</a>
       </nav>
 
-      <footer>&copy; 2025 LocoFest. Tous droits réservés.</footer>
+      <footer>&copy; 2025 Locofest. Tous droits réservés.</footer>
     </main>
   </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Adresse copiée</div>
+
+  <script>
+    (function(){
+      const EMAIL = 'locofestfr@gmail.com';
+      const SUBJECT = 'Support Locofest';
+      const BODY = [
+        'Bonjour Locofest,',
+        '',
+        'Je rencontre le problème suivant :',
+        '',
+        '(Pseudo/Email Locofest :)',
+        '',
+        'Appareil : iPhone/Android',
+        'Version :'
+      ].join('\n');
+
+      const toast = document.getElementById('toast');
+      const showToast = (msg='Adresse copiée')=>{
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'), 1400);
+      };
+
+      async function copyEmail(){
+        try{
+          await navigator.clipboard.writeText(EMAIL);
+          showToast('Adresse copiée');
+        }catch(e){
+          window.prompt('Copiez l’adresse email :', EMAIL);
+        }
+      }
+
+      function openMailto(){
+        const url = `mailto:${EMAIL}?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BODY)}`;
+        // Essaye d’ouvrir le client mail
+        window.location.href = url;
+        // Fallback copie si l’ouverture échoue ou si aucun client n’est configuré
+        setTimeout(()=> {
+          // Heuristique basique: si l’utilisateur est toujours sur la page, on propose la copie
+          if (document.visibilityState === 'visible') {
+            copyEmail();
+          }
+        }, 1200);
+      }
+
+      document.getElementById('sendBtn')?.addEventListener('click', openMailto);
+      document.getElementById('copyBtn')?.addEventListener('click', copyEmail);
+      // Rendre aussi le clic sur l’email “intelligent”
+      document.getElementById('emailLink')?.addEventListener('click', (e)=>{
+        e.preventDefault();
+        openMailto();
+      });
+    })();
+  </script>
 </body>
 </html>
