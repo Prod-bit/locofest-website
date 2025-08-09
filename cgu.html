@@ -12,9 +12,31 @@
     p, li { line-height: 1.7; }
     ul { margin-bottom: 1.2em; }
     a { color: #34aadc; }
+
+    /* Bouton Accueil (discret, cohérent avec les autres pages) */
+    .back{
+      position: fixed; top: 14px; left: 14px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 12px;
+      color: #1e2a78; background: #fff;
+      border: 1px solid #e7e9ef; border-radius: 10px;
+      text-decoration: none; box-shadow: 0 4px 18px rgba(0,0,0,.05);
+      z-index: 10;
+    }
+    .back:hover{ filter: brightness(1.02); }
+    .back:focus-visible{ outline: none; box-shadow: 0 0 0 3px #34aadc33; }
   </style>
 </head>
 <body>
+  <a class="back" href="index.html" aria-label="Retour à l’accueil">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Accueil
+  </a>
+
   <div class="container">
     <h1>Conditions Générales d’Utilisation</h1>
     <p>Bienvenue sur Locofest. Merci de lire attentivement ces conditions avant d’utiliser la plateforme.</p>
