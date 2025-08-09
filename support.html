@@ -185,8 +185,11 @@
 
       <section class="panel" aria-label="Contact">
         <p class="email">
-          <!-- Lien simple en fallback -->
-          <a id="emailLink" href="mailto:locofestfr@gmail.com">locofestfr@gmail.com</a>
+          <!-- Lien complet avec mailto:, sujet et corps encodés -->
+          <a
+            id="emailLink"
+            href="mailto:locofestfr@gmail.com?subject=Support%20Locofest&body=Bonjour%20Locofest%2C%0A%0AJe%20rencontre%20le%20probl%C3%A8me%20suivant%20%3A%0A%0A(Pseudo%2FEmail%20Locofest%20%3A)%0A%0AAppareil%20%3A%20iPhone%2FAndroid%0AVersion%20%3A"
+          >locofestfr@gmail.com</a>
         </p>
         <div class="actions" aria-label="Actions">
           <button id="sendBtn" class="btn" type="button">Envoyer un email</button>
@@ -212,17 +215,6 @@
   <script>
     (function(){
       const EMAIL = 'locofestfr@gmail.com';
-      const SUBJECT = 'Support Locofest';
-      const BODY = [
-        'Bonjour Locofest,',
-        '',
-        'Je rencontre le problème suivant :',
-        '',
-        '(Pseudo/Email Locofest :)',
-        '',
-        'Appareil : iPhone/Android',
-        'Version :'
-      ].join('\n');
 
       const toast = document.getElementById('toast');
       const showToast = (msg='Adresse copiée')=>{
@@ -241,25 +233,18 @@
       }
 
       function openMailto(){
-        const url = `mailto:${EMAIL}?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BODY)}`;
-        // Essaye d’ouvrir le client mail
+        const link = document.getElementById('emailLink');
+        const url = link?.href || `mailto:${EMAIL}`;
         window.location.href = url;
-        // Fallback copie si l’ouverture échoue ou si aucun client n’est configuré
-        setTimeout(()=> {
-          // Heuristique basique: si l’utilisateur est toujours sur la page, on propose la copie
-          if (document.visibilityState === 'visible') {
-            copyEmail();
-          }
+        // Fallback copie si aucun client mail n’est configuré
+        setTimeout(()=>{
+          if (document.visibilityState === 'visible') copyEmail();
         }, 1200);
       }
 
       document.getElementById('sendBtn')?.addEventListener('click', openMailto);
       document.getElementById('copyBtn')?.addEventListener('click', copyEmail);
-      // Rendre aussi le clic sur l’email “intelligent”
-      document.getElementById('emailLink')?.addEventListener('click', (e)=>{
-        e.preventDefault();
-        openMailto();
-      });
+      // Laisser le lien mailto fonctionner nativement (pas de preventDefault)
     })();
   </script>
 </body>
