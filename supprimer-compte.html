@@ -2,127 +2,186 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Suppression de compte - LocoFest</title>
+  <title>Supprimer mon compte – Locofest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1976D2" />
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: linear-gradient(120deg, #1e2a78 0%, #34aadc 100%);
-      min-height: 100vh;
-      font-family: 'Roboto', Arial, sans-serif;
-      margin: 0; padding: 0;
-      display: flex; justify-content: center; align-items: center;
+    :root{
+      --bleu:#1976D2;
+      --bleu-2:#34AADC;
+      --fond:#f6f8fc;
+      --carte:#fff;
+      --bordure:#e7e9ef;
+      --shadow:0 6px 24px rgba(0,0,0,.06);
+      --focus:0 0 0 3px #1976D233;
+      --rayon:14px;
+      --txt:#111;
+      --txt-sec:#333;
+      --txt-mute:#8992a1;
+      --danger:#c00;
+      --success:#0a7a0a;
     }
-    .card {
-      background: #fff;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
-      border-radius: 12px;
-      padding: 32px 22px 28px 22px;
-      max-width: 370px;
-      width: 100%;
-      margin: 40px 0;
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(1000px 420px at 50% -10%, #f9fbff, transparent 60%),
+        linear-gradient(180deg, #fbfdff, var(--fond));
+      background-color:var(--fond);
     }
-    h1 {
-      color: #1e2a78;
-      text-align: center;
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      font-weight: 700;
+    /* Bouton retour (fixé en haut-gauche) */
+    .back{
+      position:fixed; top:14px; left:14px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      color:var(--bleu);
+      background:var(--carte);
+      border:1px solid var(--bordure);
+      border-radius:10px;
+      text-decoration:none;
+      box-shadow:0 4px 18px rgba(0,0,0,.05);
+      z-index:10;
     }
-    p {
-      text-align: center;
-      margin-top: 0;
-      color: #222b44;
-      font-size: 1.06em;
+    .back:hover{filter:brightness(1.02)}
+    .back:focus-visible{outline:none; box-shadow:var(--focus)}
+
+    .wrap{
+      min-height:100%;
+      display:flex; align-items:center; justify-content:center;
+      padding:clamp(16px,3.6vw,36px);
     }
-    input, button {
-      font-size: 1em;
-      margin: 10px 0 0 0;
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #e5e5e5;
-      box-sizing: border-box;
-      outline: none;
-      transition: border-color 0.2s;
+    .card{
+      width:100%; max-width:min(520px,92vw);
+      background:var(--carte);
+      border:1px solid var(--bordure);
+      border-radius:var(--rayon);
+      box-shadow:var(--shadow);
+      padding:clamp(18px,4.6vw,28px);
     }
-    input:focus {
-      border-color: #34aadc;
+    .header{
+      text-align:center; margin-bottom:6px;
     }
-    button {
-      background: linear-gradient(90deg, #1e2a78 60%, #34aadc 100%);
-      color: #fff;
-      border: none;
-      font-weight: 600;
-      margin-top: 18px;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: 0 1px 4px rgba(30,42,120,0.09);
+    .badge{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:30px; padding:0 12px; border-radius:999px;
+      border:1px solid var(--bordure); color:var(--bleu);
+      background:linear-gradient(180deg,#ffffff,#f6f8fb);
+      font-weight:600; letter-spacing:.3px; user-select:none;
     }
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+    h1{
+      margin:.55rem 0 .3rem 0;
+      font-size:clamp(20px,3vw,26px);
+      letter-spacing:.2px; font-weight:700; color:var(--bleu);
+      text-align:center;
     }
-    .link {
-      color: #1976d2;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 0.98em;
-      margin-top: 10px;
-      display: block;
-      text-align: right;
+    p{margin:.6rem 0; color:var(--txt-sec); line-height:1.55; font-size:15.5px}
+
+    form{margin-top:6px}
+    .field{margin-top:10px}
+    input, button{
+      font:inherit; box-sizing:border-box; width:100%;
+      border-radius:10px; outline:none;
     }
-    .feedback {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 0.96em;
-      min-height: 22px;
+    input{
+      padding:10px 12px;
+      border:1px solid var(--bordure);
+      transition:border-color .2s, box-shadow .2s;
+      background:#fff; color:var(--txt);
     }
-    .error { color: #c00; }
-    .success { color: #080; }
-    #deleteSection { margin-top: 26px; }
-    #forgotPwdForm {
-      display: none;
-      margin-top: 18px;
-      text-align: center;
+    input:focus{border-color:var(--bleu-2); box-shadow:var(--focus)}
+    .hint{font-size:13px; color:var(--txt-mute); margin-top:6px}
+
+    .actions{margin-top:12px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px; padding:10px 14px; min-height:40px;
+      border-radius:10px; border:1px solid var(--bordure);
+      font-weight:600; font-size:14.5px; letter-spacing:.2px;
+      cursor:pointer; transition:transform .04s ease, filter .2s ease, box-shadow .2s ease;
+      background:linear-gradient(180deg,#2583ff,#1a6fe0); color:#fff;
+      box-shadow:0 1px 0 rgba(0,0,0,.04);
     }
-    #forgotPwdForm input {
-      margin-top: 0;
+    .btn:hover{filter:brightness(1.03)}
+    .btn:active{transform:translateY(1px)}
+    .btn:focus-visible{outline:none; box-shadow:var(--focus)}
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+
+    .link{
+      color:var(--bleu-2); text-decoration:underline; cursor:pointer;
+      font-size:14px; display:block; text-align:right; margin-top:10px;
     }
-    @media (max-width: 480px) {
-      .card { padding: 18px 5vw; }
-      h1 { font-size: 1.18em; }
+    .feedback{margin-top:10px; text-align:center; font-size:14px; min-height:22px}
+    .error{color:var(--danger)}
+    .success{color:var(--success)}
+
+    .danger{
+      background:linear-gradient(180deg,#fff5f5,#fff);
+      border:1px solid #ffd6d6; border-radius:10px;
+      padding:12px; color:#8a1f1f; font-size:14px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Suppression de compte</h1>
-    <p>Pour supprimer votre compte LocoFest et toutes vos données associées, veuillez vous connecter :</p>
-    <form id="deleteForm" autocomplete="on">
-      <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email">
-      <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password">
-      <button type="submit">Se connecter</button>
-      <span class="link" id="showForgotPwd">Mot de passe oublié ?</span>
-      <div class="feedback" id="message"></div>
-    </form>
-    <div id="forgotPwdForm">
-      <input type="email" id="forgotEmail" placeholder="Votre e-mail" autocomplete="email">
-      <button id="forgotBtn" type="button">Réinitialiser le mot de passe</button>
-      <div class="feedback" id="forgotMsg"></div>
-      <span class="link" id="backToLogin">Retour à la connexion</span>
-    </div>
-    <div id="deleteSection" style="display:none;">
-      <p style="margin-bottom:10px;">
-        <b>Attention :</b> Cette action est <span style="color:#c00;font-weight:600;">irréversible</span>.<br>
-        Cliquez ci-dessous pour supprimer définitivement votre compte et toutes vos données associées.
-      </p>
-      <button id="deleteBtn">Supprimer mon compte</button>
-      <div class="feedback" id="deleteMessage"></div>
-    </div>
+  <a class="back" href="index.html" aria-label="Retour à l’accueil">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Accueil
+  </a>
+
+  <div class="wrap">
+    <main class="card" role="main">
+      <header class="header">
+        <div class="badge" aria-hidden="true">Locofest</div>
+        <h1>Suppression de compte</h1>
+        <p>Pour supprimer votre compte Locofest et toutes vos données associées, veuillez vous connecter.</p>
+      </header>
+
+      <form id="deleteForm" autocomplete="on" novalidate>
+        <div class="field">
+          <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email" aria-label="Adresse e-mail">
+        </div>
+        <div class="field">
+          <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password" aria-label="Mot de passe">
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit" id="loginBtn">Se connecter</button>
+        </div>
+        <span class="link" id="showForgotPwd">Mot de passe oublié ?</span>
+        <div class="feedback" id="message"></div>
+      </form>
+
+      <div id="forgotPwdForm" style="display:none;">
+        <div class="field">
+          <input type="email" id="forgotEmail" placeholder="Votre e-mail" autocomplete="email" aria-label="Votre e-mail">
+        </div>
+        <div class="actions">
+          <button class="btn" id="forgotBtn" type="button">Réinitialiser le mot de passe</button>
+        </div>
+        <div class="feedback" id="forgotMsg"></div>
+        <span class="link" id="backToLogin">Retour à la connexion</span>
+      </div>
+
+      <div id="deleteSection" style="display:none; margin-top:18px;">
+        <div class="danger" role="alert">
+          <b>Attention :</b> Cette action est <span style="color:#c00;font-weight:600;">irréversible</span>.<br>
+          Cliquez ci-dessous pour supprimer définitivement votre compte et toutes vos données associées.
+        </div>
+        <div class="actions" style="margin-top:14px;">
+          <button class="btn" id="deleteBtn" type="button">Supprimer mon compte</button>
+        </div>
+        <div class="feedback" id="deleteMessage"></div>
+      </div>
+    </main>
   </div>
+
   <script>
     // === CONFIGURATION FIREBASE ===
     const firebaseConfig = {
@@ -152,11 +211,13 @@
 
     // === MOT DE PASSE OUBLIÉ (envoi email) ===
     document.getElementById('forgotBtn').onclick = function() {
+      const btn = this;
       const email = document.getElementById('forgotEmail').value.trim();
       if (!email) {
         document.getElementById('forgotMsg').innerHTML = "<span class='error'>Veuillez entrer votre e-mail.</span>";
         return;
       }
+      btn.disabled = true;
       document.getElementById('forgotMsg').innerHTML = "Envoi en cours...";
       auth.sendPasswordResetEmail(email)
         .then(() => {
@@ -164,13 +225,16 @@
         })
         .catch(error => {
           document.getElementById('forgotMsg').innerHTML = "<span class='error'>" + error.message + "</span>";
-        });
+        })
+        .finally(()=>{ btn.disabled = false; });
     };
 
     // === AUTHENTIFICATION ===
     document.getElementById('deleteForm').onsubmit = function(e) {
       e.preventDefault();
-      document.getElementById('message').innerHTML = "";
+      document.getElementById('message').textContent = "";
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       auth.signInWithEmailAndPassword(email, password)
@@ -180,7 +244,8 @@
         })
         .catch(error => {
           document.getElementById('message').innerHTML = "<span class='error'>" + error.message + "</span>";
-        });
+        })
+        .finally(()=>{ btn.disabled = false; });
     };
 
     // === SUPPRESSION DU COMPTE (backend d'abord, puis Firebase) ===
@@ -191,14 +256,12 @@
         document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur : utilisateur non authentifié.</span>";
         return;
       }
+      const btn = this; btn.disabled = true;
       user.getIdToken().then(token => {
         // 1. Supprimer les données backend d'abord
         fetch('https://locofest-backend.onrender.com/deleteUserData', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          }
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
         })
         .then(response => response.json())
         .then(data => {
@@ -224,7 +287,8 @@
         })
         .catch(() => {
           document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données associées.</span>";
-        });
+        })
+        .finally(()=>{ btn.disabled = false; });
       });
     };
   </script>
