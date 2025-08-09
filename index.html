@@ -93,26 +93,22 @@
       justify-content:center;
       gap:8px;
       text-decoration:none;
-      padding:10px 14px;
-      min-height:40px;              /* plus compact que 44px */
+      padding:8px 12px;            /* plus compact */
+      min-height:36px;             /* plus petit */
       border-radius:10px;
       border:1px solid var(--bordure);
       font-weight:600;
-      font-size:14.5px;
+      font-size:14px;              /* légèrement réduit */
       letter-spacing:.2px;
-      color:#fff;
-      background:linear-gradient(180deg,#2583ff,#1a6fe0);
+      color:var(--bleu);
+      background:linear-gradient(180deg,#ffffff,#f6f8fb); /* tous blancs */
       box-shadow:0 1px 0 rgba(0,0,0,.04);
       transition:transform .04s ease, filter .2s ease, box-shadow .2s ease;
       cursor:pointer;
     }
-    .btn:hover{filter:brightness(1.03)}
+    .btn:hover{filter:brightness(1.02)}
     .btn:active{transform:translateY(1px)}
     .btn:focus-visible{outline:none; box-shadow:var(--focus)}
-    .btn--secondary{
-      background:linear-gradient(180deg,#ffffff,#f6f8fb);
-      color:var(--bleu);
-    }
     .footer{
       margin-top:clamp(16px,3vw,20px);
       border-top:1px solid var(--bordure);
@@ -139,8 +135,8 @@
       <div class="links" role="navigation" aria-label="Liens utiles">
         <a class="btn" href="politique-confidentialite.html">Politique de confidentialité</a>
         <a class="btn" href="cgu.html">Conditions d’utilisation</a>
-        <a class="btn btn--secondary" href="supprimer-compte.html">Supprimer mon compte</a>
-        <a class="btn btn--secondary" href="support.html">Support &amp; Contact</a>
+        <a class="btn" href="supprimer-compte.html">Supprimer mon compte</a>
+        <a class="btn" href="support.html">Support &amp; Contact</a>
       </div>
 
       <div class="footer">
