@@ -155,7 +155,7 @@
           <button class="btn" type="submit" id="loginBtn">Se connecter</button>
         </div>
         <span class="link" id="showForgotPwd">Mot de passe oublié ?</span>
-        <div class="feedback" id="message"></div>
+        <div class="feedback" id="message" role="status" aria-live="polite"></div>
       </form>
 
       <div id="forgotPwdForm" style="display:none;">
@@ -165,7 +165,7 @@
         <div class="actions">
           <button class="btn" id="forgotBtn" type="button">Réinitialiser le mot de passe</button>
         </div>
-        <div class="feedback" id="forgotMsg"></div>
+        <div class="feedback" id="forgotMsg" role="status" aria-live="polite"></div>
         <span class="link" id="backToLogin">Retour à la connexion</span>
       </div>
 
@@ -177,7 +177,7 @@
         <div class="actions" style="margin-top:14px;">
           <button class="btn" id="deleteBtn" type="button">Supprimer mon compte</button>
         </div>
-        <div class="feedback" id="deleteMessage"></div>
+        <div class="feedback" id="deleteMessage" role="status" aria-live="polite"></div>
       </div>
     </main>
   </div>
@@ -196,17 +196,53 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // === I18N ERREURS (FR) ===
+    const I18N = {
+      'auth/invalid-email': "Adresse e-mail invalide.",
+      'auth/missing-email': "Veuillez renseigner votre adresse e-mail.",
+      'auth/user-not-found': "Aucun compte trouvé avec cet e-mail.",
+      'auth/user-disabled': "Ce compte est désactivé.",
+      'auth/wrong-password': "Mot de passe incorrect.",
+      'auth/invalid-credential': "Identifiants invalides.",
+      'auth/too-many-requests': "Trop de tentatives. Réessayez plus tard.",
+      'auth/network-request-failed': "Problème réseau. Vérifiez votre connexion.",
+      'auth/requires-recent-login': "Veuillez vous reconnecter pour confirmer cette action.",
+      'auth/operation-not-allowed': "Opération non autorisée.",
+      'default': "Une erreur est survenue. Veuillez réessayer."
+    };
+    function tr(code, fallback){
+      return I18N[code] || fallback || I18N.default;
+    }
+    function setFeedback(id, type, text){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.innerHTML = "";
+      const span = document.createElement('span');
+      span.className = type; // 'error' | 'success'
+      span.textContent = text;
+      el.appendChild(span);
+    }
+    function withBusy(btn, labelBusy, fn){
+      if(!btn) return fn();
+      const prev = btn.textContent;
+      btn.disabled = true; btn.textContent = labelBusy;
+      const done = ()=>{ btn.disabled = false; btn.textContent = prev; };
+      const p = Promise.resolve().then(fn);
+      p.finally(done);
+      return p;
+    }
+
     // === MOT DE PASSE OUBLIÉ (affichage formulaire) ===
     document.getElementById('showForgotPwd').onclick = function() {
       document.getElementById('deleteForm').style.display = 'none';
       document.getElementById('forgotPwdForm').style.display = 'block';
-      document.getElementById('forgotMsg').innerHTML = '';
+      setFeedback('forgotMsg', 'success', ''); // clear
       document.getElementById('forgotEmail').value = document.getElementById('email').value;
     };
     document.getElementById('backToLogin').onclick = function() {
       document.getElementById('forgotPwdForm').style.display = 'none';
       document.getElementById('deleteForm').style.display = 'block';
-      document.getElementById('forgotMsg').innerHTML = '';
+      setFeedback('forgotMsg', 'success', ''); // clear
     };
 
     // === MOT DE PASSE OUBLIÉ (envoi email) ===
@@ -214,82 +250,85 @@
       const btn = this;
       const email = document.getElementById('forgotEmail').value.trim();
       if (!email) {
-        document.getElementById('forgotMsg').innerHTML = "<span class='error'>Veuillez entrer votre e-mail.</span>";
+        setFeedback('forgotMsg', 'error', "Veuillez entrer votre e-mail.");
         return;
       }
-      btn.disabled = true;
-      document.getElementById('forgotMsg').innerHTML = "Envoi en cours...";
-      auth.sendPasswordResetEmail(email)
-        .then(() => {
-          document.getElementById('forgotMsg').innerHTML = "<span class='success'>E-mail de réinitialisation envoyé.</span>";
-        })
-        .catch(error => {
-          document.getElementById('forgotMsg').innerHTML = "<span class='error'>" + error.message + "</span>";
-        })
-        .finally(()=>{ btn.disabled = false; });
+      withBusy(btn, 'Envoi…', () =>
+        auth.sendPasswordResetEmail(email)
+          .then(() => {
+            setFeedback('forgotMsg', 'success', "E-mail de réinitialisation envoyé.");
+          })
+          .catch(error => {
+            setFeedback('forgotMsg', 'error', tr(error.code, "Impossible d’envoyer l’e-mail de réinitialisation."));
+          })
+      );
     };
 
     // === AUTHENTIFICATION ===
     document.getElementById('deleteForm').onsubmit = function(e) {
       e.preventDefault();
-      document.getElementById('message').textContent = "";
+      setFeedback('message', 'success', ''); // clear
       const btn = document.getElementById('loginBtn');
-      btn.disabled = true;
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          document.getElementById('deleteForm').style.display = 'none';
-          document.getElementById('deleteSection').style.display = 'block';
-        })
-        .catch(error => {
-          document.getElementById('message').innerHTML = "<span class='error'>" + error.message + "</span>";
-        })
-        .finally(()=>{ btn.disabled = false; });
+
+      withBusy(btn, 'Connexion…', () =>
+        auth.signInWithEmailAndPassword(email, password)
+          .then(() => {
+            document.getElementById('deleteForm').style.display = 'none';
+            document.getElementById('deleteSection').style.display = 'block';
+          })
+          .catch(error => {
+            setFeedback('message', 'error', tr(error.code, "Connexion impossible. Vérifiez vos identifiants."));
+          })
+      );
     };
 
     // === SUPPRESSION DU COMPTE (backend d'abord, puis Firebase) ===
     document.getElementById('deleteBtn').onclick = function() {
-      document.getElementById('deleteMessage').innerHTML = "";
+      setFeedback('deleteMessage', 'success', ''); // clear
       const user = auth.currentUser;
       if (!user) {
-        document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur : utilisateur non authentifié.</span>";
+        setFeedback('deleteMessage', 'error', "Erreur : utilisateur non authentifié.");
         return;
       }
-      const btn = this; btn.disabled = true;
-      user.getIdToken().then(token => {
-        // 1. Supprimer les données backend d'abord
-        fetch('https://locofest-backend.onrender.com/deleteUserData', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            // 2. Ensuite supprimer l'utilisateur Firebase
-            user.delete()
+      const btn = this;
+      withBusy(btn, 'Suppression…', () =>
+        user.getIdToken().then(token => {
+          // 1. Suppression des données backend
+          return fetch('https://locofest-backend.onrender.com/deleteUserData', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
+          })
+          .then(async response => {
+            const data = await response.json().catch(()=>({}));
+            if (!response.ok || !data.success) {
+              throw new Error('backend');
+            }
+            // 2. Suppression du compte Firebase
+            return user.delete()
               .then(() => {
-                document.getElementById('deleteMessage').innerHTML = "<span class='success'>Votre compte et vos données ont bien été supprimés.</span>";
+                setFeedback('deleteMessage', 'success', "Votre compte et vos données ont bien été supprimés.");
               })
               .catch(error => {
                 if (error.code === 'auth/requires-recent-login') {
-                  document.getElementById('deleteMessage').innerHTML = "<span class='error'>Veuillez vous reconnecter pour confirmer la suppression.</span>";
+                  setFeedback('deleteMessage', 'error', tr(error.code));
                   document.getElementById('deleteForm').style.display = 'block';
                   document.getElementById('deleteSection').style.display = 'none';
                   auth.signOut();
                 } else {
-                  document.getElementById('deleteMessage').innerHTML = "<span class='error'>" + error.message + "</span>";
+                  setFeedback('deleteMessage', 'error', tr(error.code, "La suppression du compte a échoué. Réessayez."));
                 }
               });
+          });
+        }).catch(err => {
+          if (err && err.message === 'backend') {
+            setFeedback('deleteMessage', 'error', "Erreur lors de la suppression des données associées. Réessayez plus tard.");
           } else {
-            document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données : " + (data.error || 'inconnue') + "</span>";
+            setFeedback('deleteMessage', 'error', tr(err?.code, "La suppression a échoué. Vérifiez votre connexion et réessayez."));
           }
         })
-        .catch(() => {
-          document.getElementById('deleteMessage').innerHTML = "<span class='error'>Erreur lors de la suppression des données associées.</span>";
-        })
-        .finally(()=>{ btn.disabled = false; });
-      });
+      );
     };
   </script>
 </body>
