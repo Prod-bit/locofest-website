@@ -1,0 +1,82 @@
+name: Build & Deploy Flutter Web to /app (GitHub Pages)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  APP_REPO: Prod-bit/locofest-backend     # <- ton repo Flutter
+  APP_DIR: app-src                        # <- si ton app est dans un sous-dossier, mets app-src/locofest_new
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website (locofest-website)
+        uses: actions/checkout@v4
+
+      - name: Checkout Flutter app repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.APP_REPO }}
+          path: app-src
+          # Si le repo est privé, ajoute le secret PAT_REPO et décommente:
+          # token: ${{ secrets.PAT_REPO }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: flutter pub get
+        run: flutter pub get
+        working-directory: ${{ env.APP_DIR }}
+
+      - name: Build Flutter Web (base-href /app/)
+        run: flutter build web --release --web-renderer canvaskit --base-href /app/
+        working-directory: ${{ env.APP_DIR }}
+
+      - name: Préparer le site (vitrine + app/)
+        run: |
+          mkdir -p public
+          rsync -a \
+            --exclude ".git*" \
+            --exclude ".github" \
+            --exclude "build" \
+            --exclude ".dart_tool" \
+            ./ public/
+
+          rm -rf public/app
+          mkdir -p public/app
+          cp -R ${{ env.APP_DIR }}/build/web/* public/app/
+
+          cp public/app/index.html public/app/404.html
+          touch public/.nojekyll
+          echo "locofest.net" > public/CNAME
+
+      - name: Upload artifact to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
