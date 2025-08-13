@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Locofest — Explications</title>
+  <meta name="description" content="Deux démos rapides : entrer une ville, explorer la liste d’événements et naviguer dans le calendrier." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--brand:#FFB300;--bg:#fff;--text:#121212;--muted:#595959;--soft:#FFF8E1;--max:1080px}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:var(--max);margin:0 auto;padding:20px}
+    .hero{background:linear-gradient(180deg,#fff,var(--soft));border-bottom:1px solid #FFE082}
+    .hero .container{padding:48px 20px 28px;text-align:center}
+    h1{margin:0 0 10px;font-size:clamp(28px,4.5vw,40px);line-height:1.1}
+    .lead{margin:0 0 18px;color:#333;font-size:clamp(16px,2.6vw,20px)}
+    .cta{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;text-decoration:none;padding:12px 18px;border-radius:12px;font-weight:700}
+    .grid{display:grid;gap:16px}
+    @media(min-width:760px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+    .card{border:1px solid #eee;border-radius:14px;background:#fff;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+    .media{position:relative;background:#000}
+    .media video{width:100%;height:auto;display:block}
+    .cap{padding:12px 14px}
+    .cap h3{margin:0 0 6px;font-size:16px}
+    .cap p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+    .hint{margin:14px 0 0;color:#7a5c00;background:var(--soft);border:1px dashed #FFC107;border-radius:12px;padding:10px 12px}
+    footer{border-top:1px solid #eee;color:#777;text-align:center;padding:22px 0;margin-top:26px}
+
+    /* Bouton Accueil (même style que les autres pages) */
+    .back{
+      position:fixed; top:14px; left:14px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      color:#1e2a78; background:#fff;
+      border:1px solid #e7e9ef; border-radius:10px;
+      text-decoration:none; box-shadow:0 4px 18px rgba(0,0,0,.05);
+      z-index:10;
+    }
+    .back:hover{filter:brightness(1.02)}
+    .back:focus-visible{outline:none; box-shadow:0 0 0 3px #34aadc33}
+  </style>
+</head>
+<body>
+  <!-- Bouton Accueil -->
+  <a class="back" href="index.html" aria-label="Retour à l’accueil">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Accueil
+  </a>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Locofest — comment ça marche</h1>
+      <p class="lead">1) Entrer une ville et explorer la liste. 2) Naviguer dans le calendrier (Jour/Semaine/Mois).</p>
+      <a class="cta" href="https://apps.apple.com/fr/app/locofest/id674948?utm_source=collectivites&utm_medium=web&utm_campaign=explainer" target="_blank" rel="noopener">
+        Installer Locofest
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid cols-2" aria-label="Démonstrations">
+      <!-- 1) Recherche par ville + liste d'événements -->
+      <article class="card">
+        <div class="media">
+          <video class="demo" playsinline muted loop preload="metadata">
+            <source src="assets/videos/recherche-ville.mp4" type="video/mp4" />
+            Votre navigateur ne peut pas lire la vidéo.
+          </video>
+        </div>
+        <div class="cap">
+          <h3>Recherche par ville</h3>
+          <p>Entrer une ville, ouvrir la liste, parcourir quelques événements de test et les options.</p>
+        </div>
+      </article>
+
+      <!-- 2) Calendrier de la ville -->
+      <article class="card">
+        <div class="media">
+          <video class="demo" playsinline muted loop preload="metadata">
+            <source src="assets/videos/calendrier-ville.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="cap">
+          <h3>Calendrier clair</h3>
+          <p>Après le choix de la ville, naviguer entre Jour/Semaine/Mois et faire défiler.</p>
+        </div>
+      </article>
+    </section>
+
+    <p class="hint">
+      Autoplay mobile: “muted” + “playsinline”. Le format MP4 suffit. Le .webm est optionnel.
+    </p>
+
+    <section class="container" style="text-align:center;margin-top:16px">
+      <a class="cta" href="https://apps.apple.com/fr/app/locofest/id674948?utm_source=collectivites&utm_medium=web&utm_campaign=explainer" target="_blank" rel="noopener">Installer Locofest</a>
+    </section>
+  </main>
+
+  <footer>
+    © Locofest — Agenda, chat de ville et communautés locales.
+  </footer>
+
+  <script>
+    // Lecture/pause auto quand 60% visible
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        const v = e.target;
+        if(e.isIntersecting){ v.play().catch(()=>{}); } else { v.pause(); }
+      });
+    }, {threshold: 0.6});
+    document.querySelectorAll('video.demo').forEach(v=>obs.observe(v));
+  </script>
+</body>
+</html>
