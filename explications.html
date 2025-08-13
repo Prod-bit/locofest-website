@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Locofest — Explications</title>
-  <meta name="description" content="Deux démos rapides : entrer une ville, explorer la liste d’événements et naviguer dans le calendrier." />
+  <meta name="description" content="Présentation de Locofest : rechercher une ville, consulter une fiche événement et planifier avec le calendrier (Jour/Semaine/Mois)." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -31,6 +31,7 @@
     .cap h3{margin:0 0 6px;font-size:16px;color:#0f4fa8}
     .cap p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
     .note{margin-top:18px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#f7faff;color:#334257;font-size:14px}
+    .note ol{margin:8px 0 0 18px; padding-left:18px}
     footer{border-top:1px solid var(--border);color:#6c7890;text-align:center;padding:22px 0;margin-top:26px;font-size:13px}
     .back{position:fixed;top:14px;left:14px;display:inline-flex;align-items:center;gap:8px;padding:10px 12px;color:var(--brand);background:#fff;border:1px solid var(--border);border-radius:10px;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.05);z-index:10}
     .back:hover{filter:brightness(1.02)}
@@ -48,7 +49,7 @@
   <header class="hero">
     <div class="container">
       <h1>Locofest — comment ça marche</h1>
-      <p class="lead">1) Entrer une ville et explorer la liste. 2) Naviguer dans le calendrier (Jour/Semaine/Mois).</p>
+      <p class="lead">1) Saisissez une ville. 2) Parcourez la liste d’événements. 3) Planifiez avec le calendrier (Jour/Semaine/Mois).</p>
       <a class="cta" href="https://apps.apple.com/fr/app/locofest/id6749483090?utm_source=collectivites&utm_medium=web&utm_campaign=explainer" target="_blank" rel="noopener">
         Installer Locofest
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
@@ -58,38 +59,44 @@
 
   <main class="container">
     <section class="grid cols-2" aria-label="Démonstrations">
-      <!-- 1) Recherche par ville + liste d'événements -->
+      <!-- 1) Recherche par ville -->
       <article class="card">
         <div class="media">
           <video class="demo" playsinline webkit-playsinline muted autoplay loop preload="metadata"
                  disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen">
-            <source src="/recherche-ville.mp4?v=4" type="video/mp4" />
+            <source src="/recherche-ville.mp4?v=5" type="video/mp4" />
             Votre navigateur ne peut pas lire la vidéo.
           </video>
         </div>
         <div class="cap">
           <h3>Recherche par ville</h3>
-          <p>Entrer une ville, ouvrir la liste, parcourir quelques événements de test et les options.</p>
+          <p>Saisissez une ville pour afficher les événements disponibles. Ouvrez une fiche pour les détails, l’itinéraire, le partage ou l’ajout aux favoris.</p>
         </div>
       </article>
 
-      <!-- 2) Calendrier de la ville -->
+      <!-- 2) Calendrier -->
       <article class="card">
         <div class="media">
           <video class="demo" playsinline webkit-playsinline muted autoplay loop preload="metadata"
                  disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen">
-            <source src="/calendrier-ville.mp4?v=4" type="video/mp4" />
+            <source src="/calendrier-ville.mp4?v=5" type="video/mp4" />
           </video>
         </div>
         <div class="cap">
-          <h3>Calendrier clair</h3>
-          <p>Après le choix de la ville, naviguer entre Jour/Semaine/Mois et faire défiler.</p>
+          <h3>Calendrier de la ville</h3>
+          <p>Planifiez avec le calendrier : passez entre les vues Jour, Semaine et Mois puis faites défiler les dates.</p>
         </div>
       </article>
     </section>
 
-    <section class="note" aria-label="Résumé">
-      <strong>En bref</strong> — Choisissez votre ville, parcourez la liste d’événements, ouvrez une fiche pour les détails et le partage, puis utilisez le calendrier (Jour/Semaine/Mois) pour planifier.
+    <section class="note" aria-label="Mode d’emploi">
+      <strong>Mode d’emploi</strong>
+      <ol>
+        <li>Saisissez une ville pour filtrer les événements.</li>
+        <li>Parcourez la liste et ouvrez une fiche (description, lieu, horaires, lien officiel).</li>
+        <li>Ajoutez aux favoris ou partagez si besoin.</li>
+        <li>Utilisez le calendrier et basculez entre Jour · Semaine · Mois.</li>
+      </ol>
     </section>
   </main>
 
