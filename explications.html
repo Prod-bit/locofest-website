@@ -9,14 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --brand:#1976D2;        /* bleu app */
-      --bg:#ffffff;
-      --soft:#E9F2FF;         /* bleu très clair */
-      --text:#121212;
-      --muted:#596273;
-      --max:1080px;
-      --radius:14px;
-      --border:#e7e9ef;
+      --brand:#1976D2; --bg:#ffffff; --soft:#E9F2FF; --text:#121212;
+      --muted:#596273; --max:1080px; --radius:14px; --border:#e7e9ef;
       --shadow:0 6px 18px rgba(0,0,0,.05);
     }
     *{box-sizing:border-box}
@@ -32,24 +26,15 @@
     @media(min-width:760px){.grid.cols-2{grid-template-columns:1fr 1fr}}
     .card{border:1px solid var(--border);border-radius:var(--radius);background:#fff;overflow:hidden;box-shadow:var(--shadow)}
     .media{position:relative;background:#000}
-    .media video{width:100%;height:auto;display:block;aspect-ratio:9/16} /* évite le flash noir et stabilise la hauteur */
+    .media video{width:100%;height:auto;display:block;aspect-ratio:9/16}
     .cap{padding:12px 14px}
     .cap h3{margin:0 0 6px;font-size:16px;color:#0f4fa8}
     .cap p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+    .note{margin-top:18px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#f7faff;color:#334257;font-size:14px}
     footer{border-top:1px solid var(--border);color:#6c7890;text-align:center;padding:22px 0;margin-top:26px;font-size:13px}
-
-    /* Bouton Accueil cohérent */
-    .back{
-      position:fixed; top:14px; left:14px;
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      color:var(--brand); background:#fff;
-      border:1px solid var(--border); border-radius:10px;
-      text-decoration:none; box-shadow:0 4px 18px rgba(0,0,0,.05);
-      z-index:10;
-    }
+    .back{position:fixed;top:14px;left:14px;display:inline-flex;align-items:center;gap:8px;padding:10px 12px;color:var(--brand);background:#fff;border:1px solid var(--border);border-radius:10px;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.05);z-index:10}
     .back:hover{filter:brightness(1.02)}
-    .back:focus-visible{outline:none; box-shadow:0 0 0 3px #1976D233}
+    .back:focus-visible{outline:none;box-shadow:0 0 0 3px #1976D233}
   </style>
 </head>
 <body>
@@ -77,8 +62,8 @@
       <!-- 1) Recherche par ville + liste d'événements -->
       <article class="card">
         <div class="media">
-          <video class="demo" playsinline muted autoplay loop preload="metadata">
-            <source src="assets/videos/recherche-ville.mp4?v=1" type="video/mp4" />
+          <video class="demo" playsinline webkit-playsinline muted autoplay loop preload="auto">
+            <source src="assets/videos/recherche-ville.mp4?v=2" type="video/mp4" />
             Votre navigateur ne peut pas lire la vidéo.
           </video>
         </div>
@@ -91,8 +76,8 @@
       <!-- 2) Calendrier de la ville -->
       <article class="card">
         <div class="media">
-          <video class="demo" playsinline muted autoplay loop preload="metadata">
-            <source src="assets/videos/calendrier-ville.mp4?v=1" type="video/mp4" />
+          <video class="demo" playsinline webkit-playsinline muted autoplay loop preload="auto">
+            <source src="assets/videos/calendrier-ville.mp4?v=2" type="video/mp4" />
           </video>
         </div>
         <div class="cap">
@@ -101,6 +86,10 @@
         </div>
       </article>
     </section>
+
+    <section class="note" aria-label="Résumé">
+      <strong>En bref</strong> — Choisissez votre ville, parcourez la liste d’événements, ouvrez une fiche pour les détails et le partage, puis utilisez le calendrier (Jour/Semaine/Mois) pour planifier.
+    </section>
   </main>
 
   <footer>
@@ -108,10 +97,21 @@
   </footer>
 
   <script>
-    // Fallback: si l'autoplay échoue, on active les contrôles
+    // Autoplay fiable + fallback contrôles sur iOS
     document.querySelectorAll('video.demo').forEach(v=>{
+      v.muted = true;
+      v.setAttribute('muted','');
+      v.setAttribute('playsinline','');
+      v.setAttribute('webkit-playsinline','');
+
       const tryPlay = () => v.play().catch(()=>{ v.controls = true; });
-      if (v.readyState >= 2) tryPlay(); else v.addEventListener('loadeddata', tryPlay, {once:true});
+      if (v.readyState >= 2) tryPlay();
+      else v.addEventListener('canplay', tryPlay, {once:true});
+
+      v.addEventListener('error', () => {
+        console.warn('Erreur vidéo:', v.currentSrc || v.src, v.error);
+        v.controls = true;
+      }, {once:true});
     });
   </script>
 </body>
