@@ -121,6 +121,25 @@
       text-decoration:underline;
     }
     a:focus-visible{outline:none; box-shadow:var(--focus); border-radius:8px}
+
+    /* Lien App Store discret (pill) */
+    .store-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--bordure);
+      border-radius:999px;
+      background:linear-gradient(180deg,#ffffff,#f6f8fb);
+      color:var(--bleu);
+      text-decoration:none;
+      font-weight:600;
+      font-size:13px;
+      box-shadow:0 1px 0 rgba(0,0,0,.03);
+      margin-left:.5rem;
+    }
+    .store-link:hover{filter:brightness(1.02)}
+    .store-link svg{display:block}
   </style>
 </head>
 <body>
@@ -133,6 +152,9 @@
       </p>
 
       <div class="links" role="navigation" aria-label="Liens utiles">
+        <a class="btn" href="explications.html" aria-label="Voir les explications et démos vidéo de Locofest">
+          Comment ça marche (démos vidéo)
+        </a>
         <a class="btn" href="politique-confidentialite.html">Politique de confidentialité</a>
         <a class="btn" href="cgu.html">Conditions d’utilisation</a>
         <a class="btn" href="supprimer-compte.html">Supprimer mon compte</a>
@@ -142,6 +164,12 @@
       <div class="footer">
         © 2025 Locofest · Contact :
         <a class="inline" href="mailto:locofestfr@gmail.com?subject=Contact%20Locofest">locofestfr@gmail.com</a>
+        <a class="store-link" href="https://apps.apple.com/fr/app/locofest/id6749483090?utm_source=website&utm_medium=footer&utm_campaign=homepage" target="_blank" rel="noopener" aria-label="Installer l’app Locofest sur l’App Store">
+          Installer l’app
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
       </div>
     </main>
   </div>
