@@ -8,37 +8,48 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--brand:#FFB300;--bg:#fff;--text:#121212;--muted:#595959;--soft:#FFF8E1;--max:1080px}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    :root{
+      --brand:#1976D2;        /* bleu app */
+      --bg:#ffffff;
+      --soft:#E9F2FF;         /* bleu très clair */
+      --text:#121212;
+      --muted:#596273;
+      --max:1080px;
+      --radius:14px;
+      --border:#e7e9ef;
+      --shadow:0 6px 18px rgba(0,0,0,.05);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
     .container{max-width:var(--max);margin:0 auto;padding:20px}
-    .hero{background:linear-gradient(180deg,#fff,var(--soft));border-bottom:1px solid #FFE082}
+    .hero{background:linear-gradient(180deg,#fff,var(--soft));border-bottom:1px solid var(--border)}
     .hero .container{padding:48px 20px 28px;text-align:center}
-    h1{margin:0 0 10px;font-size:clamp(28px,4.5vw,40px);line-height:1.1}
-    .lead{margin:0 0 18px;color:#333;font-size:clamp(16px,2.6vw,20px)}
+    h1{margin:0 0 10px;font-size:clamp(28px,4.5vw,40px);line-height:1.1;color:#0f4fa8}
+    .lead{margin:0 0 18px;color:#2d3a4d;font-size:clamp(16px,2.6vw,20px)}
     .cta{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;text-decoration:none;padding:12px 18px;border-radius:12px;font-weight:700}
+    .cta:hover{filter:brightness(0.96)}
     .grid{display:grid;gap:16px}
     @media(min-width:760px){.grid.cols-2{grid-template-columns:1fr 1fr}}
-    .card{border:1px solid #eee;border-radius:14px;background:#fff;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+    .card{border:1px solid var(--border);border-radius:var(--radius);background:#fff;overflow:hidden;box-shadow:var(--shadow)}
     .media{position:relative;background:#000}
-    .media video{width:100%;height:auto;display:block}
+    .media video{width:100%;height:auto;display:block;aspect-ratio:9/16} /* évite le flash noir et stabilise la hauteur */
     .cap{padding:12px 14px}
-    .cap h3{margin:0 0 6px;font-size:16px}
+    .cap h3{margin:0 0 6px;font-size:16px;color:#0f4fa8}
     .cap p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
-    .hint{margin:14px 0 0;color:#7a5c00;background:var(--soft);border:1px dashed #FFC107;border-radius:12px;padding:10px 12px}
-    footer{border-top:1px solid #eee;color:#777;text-align:center;padding:22px 0;margin-top:26px}
+    footer{border-top:1px solid var(--border);color:#6c7890;text-align:center;padding:22px 0;margin-top:26px;font-size:13px}
 
-    /* Bouton Accueil (même style que les autres pages) */
+    /* Bouton Accueil cohérent */
     .back{
       position:fixed; top:14px; left:14px;
       display:inline-flex; align-items:center; gap:8px;
       padding:10px 12px;
-      color:#1e2a78; background:#fff;
-      border:1px solid #e7e9ef; border-radius:10px;
+      color:var(--brand); background:#fff;
+      border:1px solid var(--border); border-radius:10px;
       text-decoration:none; box-shadow:0 4px 18px rgba(0,0,0,.05);
       z-index:10;
     }
     .back:hover{filter:brightness(1.02)}
-    .back:focus-visible{outline:none; box-shadow:0 0 0 3px #34aadc33}
+    .back:focus-visible{outline:none; box-shadow:0 0 0 3px #1976D233}
   </style>
 </head>
 <body>
@@ -54,7 +65,7 @@
     <div class="container">
       <h1>Locofest — comment ça marche</h1>
       <p class="lead">1) Entrer une ville et explorer la liste. 2) Naviguer dans le calendrier (Jour/Semaine/Mois).</p>
-      <a class="cta" href="https://apps.apple.com/fr/app/locofest/id674948?utm_source=collectivites&utm_medium=web&utm_campaign=explainer" target="_blank" rel="noopener">
+      <a class="cta" href="https://apps.apple.com/fr/app/locofest/id6749483090?utm_source=collectivites&utm_medium=web&utm_campaign=explainer" target="_blank" rel="noopener">
         Installer Locofest
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
       </a>
@@ -66,8 +77,8 @@
       <!-- 1) Recherche par ville + liste d'événements -->
       <article class="card">
         <div class="media">
-          <video class="demo" playsinline muted loop preload="metadata">
-            <source src="assets/videos/recherche-ville.mp4" type="video/mp4" />
+          <video class="demo" playsinline muted autoplay loop preload="metadata">
+            <source src="assets/videos/recherche-ville.mp4?v=1" type="video/mp4" />
             Votre navigateur ne peut pas lire la vidéo.
           </video>
         </div>
@@ -80,8 +91,8 @@
       <!-- 2) Calendrier de la ville -->
       <article class="card">
         <div class="media">
-          <video class="demo" playsinline muted loop preload="metadata">
-            <source src="assets/videos/calendrier-ville.mp4" type="video/mp4" />
+          <video class="demo" playsinline muted autoplay loop preload="metadata">
+            <source src="assets/videos/calendrier-ville.mp4?v=1" type="video/mp4" />
           </video>
         </div>
         <div class="cap">
@@ -90,14 +101,6 @@
         </div>
       </article>
     </section>
-
-    <p class="hint">
-      Autoplay mobile: “muted” + “playsinline”. Le format MP4 suffit. Le .webm est optionnel.
-    </p>
-
-    <section class="container" style="text-align:center;margin-top:16px">
-      <a class="cta" href="https://apps.apple.com/fr/app/locofest/id674948?utm_source=collectivites&utm_medium=web&utm_campaign=explainer" target="_blank" rel="noopener">Installer Locofest</a>
-    </section>
   </main>
 
   <footer>
@@ -105,14 +108,11 @@
   </footer>
 
   <script>
-    // Lecture/pause auto quand 60% visible
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        const v = e.target;
-        if(e.isIntersecting){ v.play().catch(()=>{}); } else { v.pause(); }
-      });
-    }, {threshold: 0.6});
-    document.querySelectorAll('video.demo').forEach(v=>obs.observe(v));
+    // Fallback: si l'autoplay échoue, on active les contrôles
+    document.querySelectorAll('video.demo').forEach(v=>{
+      const tryPlay = () => v.play().catch(()=>{ v.controls = true; });
+      if (v.readyState >= 2) tryPlay(); else v.addEventListener('loadeddata', tryPlay, {once:true});
+    });
   </script>
 </body>
 </html>
