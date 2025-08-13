@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Locofest — Espace Mairies</title>
+  <meta name="description" content="Inscription/connexion des mairies pour publier l’agenda local. Les emails officiels sont certifiés automatiquement (Premium offert)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#1976D2; --brand2:#0f4fa8; --bg:#ffffff; --soft:#E9F2FF; --text:#121212;
+      --muted:#596273; --max:960px; --radius:14px; --border:#e7e9ef; --shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:var(--max);margin:0 auto;padding:20px}
+    .hero{background:linear-gradient(180deg,#fff,var(--soft));border-bottom:1px solid var(--border)}
+    .hero .container{padding:48px 20px 28px;text-align:center}
+    h1{margin:0 0 8px;font-size:clamp(26px,4vw,36px);line-height:1.1;color:var(--brand2)}
+    .lead{margin:0 0 18px;color:#2d3a4d;font-size:clamp(15px,2.2vw,18px)}
+    .grid{display:grid;gap:16px}
+    @media(min-width:840px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+    .card{border:1px solid var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);padding:18px}
+    label{display:block;font-size:13px;color:#334257;margin:8px 0 6px}
+    input[type="text"],input[type="email"],input[type="url"],input[type="tel"],input[type="password"]{
+      width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:#f7f9fc
+    }
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--brand);color:#fff;
+      border:none;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
+    .btn.secondary{background:#fff;color:var(--brand2);border:1px solid var(--border)}
+    .btn.link{background:transparent;color:var(--brand2);border:none;text-decoration:underline;padding:6px 8px}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .note{margin-top:14px;padding:12px;border:1px solid var(--border);border-radius:12px;background:#f7faff;color:#334257;font-size:14px}
+    .muted{color:var(--muted);font-size:13px}
+    .ok{color:#117a36}
+    .warn{color:#aa5a00}
+    .err{color:#b00020}
+    footer{border-top:1px solid var(--border);color:#6c7890;text-align:center;padding:22px 0;margin-top:26px;font-size:13px}
+    .back{position:fixed;top:14px;left:14px;display:inline-flex;align-items:center;gap:8px;padding:10px 12px;color:var(--brand);background:#fff;border:1px solid var(--border);border-radius:10px;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.05);z-index:10}
+    .back:hover{filter:brightness(1.02)}
+    .back:focus-visible{outline:none;box-shadow:0 0 0 3px #1976D233}
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html" aria-label="Retour à l’accueil">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Accueil
+  </a>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Espace Mairies</h1>
+      <p class="lead">Créez ou connectez votre compte pour publier l’agenda de votre commune. Les adresses officielles sont certifiées automatiquement (Premium offert).</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid cols-2" aria-label="Inscription / Connexion">
+      <article class="card">
+        <h3 style="margin:0 0 10px;color:#0f4fa8">Créer un compte Mairie</h3>
+        <form id="signupForm">
+          <label for="org">Commune / Organisme</label>
+          <input id="org" type="text" required placeholder="Mairie de …" autocomplete="organization">
+
+          <div class="row">
+            <div>
+              <label for="email">Email professionnel</label>
+              <input id="email" type="email" required placeholder="ex. contact@ville.fr" autocomplete="email">
+            </div>
+            <div>
+              <label for="password">Mot de passe</label>
+              <input id="password" type="password" required minlength="8" placeholder="Au moins 8 caractères" autocomplete="new-password">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="site">Site officiel (URL)</label>
+              <input id="site" type="url" placeholder="https://www.ville.fr" autocomplete="url">
+            </div>
+            <div>
+              <label for="phone">Téléphone</label>
+              <input id="phone" type="tel" placeholder="+33 …" autocomplete="tel">
+            </div>
+          </div>
+
+          <label class="muted"><input type="checkbox" id="cgu" required> J’accepte les CGU et le traitement de mes données (RGPD).</label>
+
+          <div style="display:flex;gap:10px;margin-top:10px">
+            <button class="btn" id="btnSignup" type="submit">Créer mon compte Mairie</button>
+            <button class="btn secondary" id="btnCheckVerified" type="button" title="Après avoir cliqué le lien reçu par email">J’ai vérifié mon email</button>
+          </div>
+
+          <p id="signupMsg" class="note muted" style="display:none"></p>
+        </form>
+      </article>
+
+      <article class="card">
+        <h3 style="margin:0 0 10px;color:#0f4fa8">Se connecter</h3>
+        <form id="loginForm">
+          <label for="emailLogin">Email</label>
+          <input id="emailLogin" type="email" required autocomplete="email">
+
+          <label for="passwordLogin">Mot de passe</label>
+          <input id="passwordLogin" type="password" required autocomplete="current-password">
+
+          <div style="display:flex;gap:10px;margin-top:10px">
+            <button class="btn" id="btnLogin" type="submit">Connexion</button>
+            <button class="btn secondary" id="btnReset" type="button">Mot de passe oublié</button>
+          </div>
+
+          <p id="loginMsg" class="note muted" style="display:none"></p>
+        </form>
+      </article>
+    </section>
+
+    <section class="note" aria-label="Aide">
+      <strong>Comment ça marche</strong>
+      <ol>
+        <li>Créez le compte avec votre adresse professionnelle de mairie.</li>
+        <li>Ouvrez l’email de vérification et cliquez sur le lien.</li>
+        <li>Revenez ici et cliquez “J’ai vérifié mon email”. Si le domaine est officiel (ex. gouv.fr, ville.fr), votre compte passe automatiquement en Premium certifié.</li>
+      </ol>
+      <p class="muted" style="margin:8px 0 0">Besoin d’aide ? Écrivez-nous: support@locofest.net</p>
+    </section>
+  </main>
+
+  <footer>
+    © Locofest — Espace Mairies.
+  </footer>
+
+  <!-- Firebase (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+
+  <script>
+    // 1) CONFIG FIREBASE — à remplacer par votre config web
+    const firebaseConfig = {
+      apiKey: "REPLACE_ME",
+      authDomain: "REPLACE_ME.firebaseapp.com",
+      projectId: "REPLACE_ME",
+      appId: "REPLACE_ME",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const functions = firebase.functions();
+
+    // 2) Helpers
+    const byId = id => document.getElementById(id);
+    const $signupMsg = byId('signupMsg');
+    const $loginMsg  = byId('loginMsg');
+
+    function showMsg(node, text, type='info'){
+      node.style.display = 'block';
+      node.classList.remove('ok','warn','err','muted');
+      if(type==='ok') node.classList.add('ok');
+      if(type==='warn') node.classList.add('warn');
+      if(type==='err') node.classList.add('err');
+      if(type==='info') node.classList.add('muted');
+      node.textContent = text;
+    }
+
+    // Domaines considérés comme "officiels"
+    const OFFICIAL_PATTERNS = [
+      /\.gouv\.fr$/i,
+      /(^|\.)ville\.fr$/i,
+      /(^|\.)mairie[-\.]/i,
+      /(^|\.)agglo/i,
+      /(^|\.)metropole/i,
+      /(^|\.)cc[-\.]/i,       // communautés de communes
+      /(^|\.)grand[-\.]/i     // ex. grandlyon.fr
+    ];
+    function isOfficialEmail(email){
+      try{
+        const domain = email.split('@')[1].toLowerCase();
+        return OFFICIAL_PATTERNS.some(rx => rx.test(domain));
+      }catch{ return false; }
+    }
+
+    async function createOrMergeUserDoc(uid, data){
+      const ref = db.collection('users').doc(uid);
+      await ref.set({
+        ...data,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }, {merge:true});
+      return ref.get();
+    }
+
+    // 3) Inscription
+    byId('signupForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn = byId('btnSignup'); btn.disabled = true;
+
+      const org = byId('org').value.trim();
+      const email = byId('email').value.trim().toLowerCase();
+      const password = byId('password').value.trim();
+      const site = byId('site').value.trim();
+      const phone = byId('phone').value.trim();
+      const cgu = byId('cgu').checked;
+
+      if(!cgu){ showMsg($signupMsg, "Merci d’accepter les CGU.", 'warn'); btn.disabled=false; return; }
+
+      try{
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
+        const user = cred.user;
+
+        // Enregistrement Firestore
+        await createOrMergeUserDoc(user.uid, {
+          email, orgName: org, site, phone,
+          org_type: 'mairie',
+          verified: false,
+          premium: false,
+          badge: null,
+          role: 'mairie',                 // rôle de base
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Envoi de l’email de vérification
+        await user.sendEmailVerification();
+        showMsg($signupMsg,
+          `Un email de vérification a été envoyé à ${email}. Ouvrez-le puis cliquez sur “J’ai vérifié mon email”.`,
+          'ok'
+        );
+        byId('btnCheckVerified').disabled = false;
+      } catch(err){
+        const msg = (err && err.message) ? err.message : String(err);
+        showMsg($signupMsg, `Erreur d'inscription: ${msg}`, 'err');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // 4) Vérification + Premium si domaine officiel
+    byId('btnCheckVerified').addEventListener('click', async ()=>{
+      const btn = byId('btnCheckVerified'); btn.disabled = true;
+      try{
+        const user = auth.currentUser;
+        if(!user){ showMsg($signupMsg,"Veuillez d’abord vous connecter avec l’email utilisé.", 'warn'); return; }
+        await user.reload();
+        if(!user.emailVerified){
+          showMsg($signupMsg, "Email non encore vérifié. Cliquez d’abord sur le lien reçu.", 'warn'); return;
+        }
+
+        const official = isOfficialEmail(user.email || "");
+        if(official){
+          // Tentative d’élévation via Cloud Function (sécurisée côté serveur)
+          try{
+            const elevate = functions.httpsCallable('elevateToPremium');
+            await elevate({ uid: user.uid, email: user.email });
+            showMsg($signupMsg, "Adresse vérifiée. Votre compte a été certifié Premium.", 'ok');
+          }catch{
+            // Fallback si la CF n’est pas en place: marquer une demande côté Firestore
+            await createOrMergeUserDoc(user.uid, {
+              verified: true,
+              premium: true,        // à sécuriser par règle/CF en prod
+              badge: 'certifié',
+              role: 'mairie_premium'
+            });
+            showMsg($signupMsg, "Adresse vérifiée. Premium activé (mode fallback).", 'ok');
+          }
+        }else{
+          await createOrMergeUserDoc(user.uid, { verified: true, premium: false, badge: null });
+          showMsg($signupMsg,
+            "Adresse vérifiée. Compte actif. Pour la certification Premium, utilisez une adresse officielle ou contactez-nous.",
+            'info'
+          );
+        }
+      }catch(err){
+        showMsg($signupMsg, `Erreur de vérification: ${err?.message || err}`, 'err');
+      }finally{
+        btn.disabled = false;
+      }
+    });
+
+    // 5) Connexion
+    byId('loginForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn = byId('btnLogin'); btn.disabled = true;
+      const email = byId('emailLogin').value.trim().toLowerCase();
+      const password = byId('passwordLogin').value.trim();
+      try{
+        const cred = await auth.signInWithEmailAndPassword(email, password);
+        await cred.user.reload();
+        if(!cred.user.emailVerified){
+          showMsg($loginMsg, "Merci de vérifier votre email avant connexion.", 'warn');
+          await auth.signOut();
+          return;
+        }
+        // Récup statut
+        const snap = await db.collection('users').doc(cred.user.uid).get();
+        const u = snap.data() || {};
+        const badge = u.badge ? ` — ${u.badge}` : '';
+        showMsg($loginMsg, `Connecté. Rôle: ${u.role || 'mairie'}${badge}.`, 'ok');
+        // TODO: rediriger vers votre tableau de bord si présent
+        // location.href = '/dashboard-mairie.html';
+      }catch(err){
+        showMsg($loginMsg, `Erreur de connexion: ${err?.message || err}`, 'err');
+      }finally{
+        btn.disabled = false;
+      }
+    });
+
+    // 6) Reset mot de passe
+    byId('btnReset').addEventListener('click', async ()=>{
+      const email = byId('emailLogin').value.trim().toLowerCase();
+      if(!email){ showMsg($loginMsg,"Entrez votre email puis cliquez à nouveau.",'warn'); return; }
+      try{
+        await auth.sendPasswordResetEmail(email);
+        showMsg($loginMsg, `Email de réinitialisation envoyé à ${email}.`, 'ok');
+      }catch(err){
+        showMsg($loginMsg, `Erreur: ${err?.message || err}`, 'err');
+      }
+    });
+  </script>
+</body>
+</html>
